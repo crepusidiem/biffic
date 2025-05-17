@@ -3,11 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Mapbox GL JS CSS -->
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="global.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <script src="map.js" type="module"></script>
 
     <title>Bikewatching</title>
   </head>
   <body>
-    <h1>🚴🏼‍♀️ Biffic </h1>
+    <!-- wrap title + slider in a flex header -->
+    <header>
+      <h1>🚴🏼‍♀️ Bikewatching</h1>
+      <label for="time-slider">
+        <p>Filter by time:</p>
+        <input
+          id="time-slider"
+          type="range"
+          min="-1" max="1440"
+          value="-1"
+          oninput="timeDisplay.textContent = this.value < 0
+            ? '(any time)'
+            : ('0'+Math.floor(this.value/60)).slice(-2)
+              + ':' + ('0'+this.value%60).slice(-2)"
+        />
+        <time id="timeDisplay"><em>(any time)</em></time>
+    </label>
+
+    </header>
+
+    <div id="map">
+      <svg></svg>
+    </div>
   </body>
 </html>
