@@ -1,4 +1,9 @@
 /* reset margins, make full-page flex column */
+:root {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -75,8 +80,44 @@ time em {
 }
 
 #map svg circle {
+  fill: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
   fill-opacity: 0.5;
   stroke: white;
   stroke-width: 2;
   pointer-events: auto;
+}
+
+.legend {
+  display: flex;
+  gap: 1px;
+  margin-block: 20px;
+
+  div {
+    /* Let the text sit in the center vertically */
+    color: white;
+    padding: 0.3em 1em 0.8em;
+    font: 1.5em sans-serif;
+    font-weight: bold;
+    flex: 1;
+    height: 0.8em;
+    background-color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+    );
+  }
+
+  #more-departures {
+    text-align: left;
+  }
+  #balanced {
+    text-align: center;
+  }
+  #more-arrival {
+    text-align: right;
+  }
 }

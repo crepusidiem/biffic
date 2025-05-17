@@ -70,6 +70,7 @@ const map = new mapboxgl.Map({
 });
 
 map.on('load', async () => {
+    let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
     map.addSource('boston_route', {
     type: 'geojson',
     data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson',
@@ -182,7 +183,8 @@ map.on('load', async () => {
         circles
             .data(filteredStations)
             .join('circle') // Ensure the data is bound correctly
-            .attr('r', (d) => radiusScale(d.total)); // Update circle sizes
+            .attr('r', (d) => radiusScale(d.total)) // Update circle sizes
+            .style('--departure-ratio', (d) => stationFlow(d.departures / d.total),);
     }
 
 
@@ -196,4 +198,3 @@ map.on('load', async () => {
     updateTimeDisplay();
 
 });
-
